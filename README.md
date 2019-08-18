@@ -31,9 +31,40 @@ model.put("company", "neuland");
 config.renderTemplate(template, model);
 
 
+JadeTemplate t1 = config.getTemplate("index.jade");
+JadeTemplate t2 = config.getTemplate("index.jade");
+t1.equals(t2)
 
+config.clearCache();
 
+config.setCaching(false);
 
+config.setPrettyPrint(true);
+
+config.setMode(Jade4J.Mode.HTML);
+config.setMode(Jade4J.Mode.XHTML);
+config.setMOde(Jade4J.Mode.XML);
+
+config.setFilter("coffeescript", new CoffeeScriptFilter());
+
+public class MathHelper {
+  public long round(double number) {
+    return Math.round(number);
+  }
+}
+
+model.put("math", new MathHelper());
+
+p= math.round(1.44);
+
+Map<String, Object> defaults = new hashMap<String, Object>();
+defaults.put("city", "Bremen");
+defaults.put("country", "Germany");
+defaults.put("url", new MyUrlHelper());
+config.setSharedVariables(defaults);
+
+TemplateLoader loader = new FileTemplateLoader("/templates/", "UTF-8");
+config.setTemplateLoader(loader);
 ```
 
 ```sh
@@ -41,7 +72,25 @@ mvn install
 
 ```
 
-```
+```coffee
+script
+  :coffeescript
+   sayHello
+   
+sayHello(function() {
+  return alert("hello world");
+});
+
+- var book = {"price": 4.99, "title": "The Book"}
+if book.price < 5.50 && !book.soldOut
+  p.sale special offer: #{book.title}
+  
+each author in ["artur", "stefan", "micheal"]
+  h2= author
+  
+- var book = {size: 540}
+book.size
+book["size"]
 ```
 
 
