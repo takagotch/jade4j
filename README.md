@@ -22,8 +22,13 @@ Jade4J.render(template, model, writer);
 JadeConfigurtion config = new JadeConfiguration();
 JadeTemplate template = config.getTemplate("index");
 
+Jade4J.render(template, model, writer);
 
-
+JadeConfiguration config = new JadeConfiguration();
+JadeTemplate template = config.getTemplate("index");
+Map<String, Object> model = new HashMap<String, Object>();
+model.put("company", "neuland");
+config.renderTemplate(template, model);
 
 
 
